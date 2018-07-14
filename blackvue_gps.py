@@ -7,8 +7,10 @@ Usage:
 
 """
 import csv
+import logging
 import os
 import re
+import warnings
 from collections import namedtuple
 
 import pynmea2
@@ -43,7 +45,7 @@ def parse_blackvue_nmea(filename):
                                                 lat=lat,
                                                 lon=lon))
                 except ParseError:
-                    print('ParseError', line[len(unix_ms) + 2:])
+                    warnings.warn('pynmea2 could not parse a line')
     return records
 
 
@@ -71,11 +73,19 @@ def main(**kwargs):
     filename = kwargs.get('<filename>')
     if filename:
         if os.path.isfile(filename):
+            logging.info(
+                'Parsing the file {filename}'.format(filename=filename)
+            )
             records = parse_blackvue_nmea(filename=filename)
             if tocsv:
                 outputfilename = filename.replace('.mp4', '.gps.csv')
                 list_of_namedtuple_to_csv(records, outputfilename)
         elif os.path.isdir(filename):
+            logging.info(
+                'Parsing all mp4-files in the folder {filename}'.format(
+                    filename=filename
+                )
+            )
             foldername = filename
             for filename in filter(lambda x: x.endswith('.mp4'),
                                    os.listdir(foldername)):
@@ -90,6 +100,10 @@ def main(**kwargs):
                     outputfilename = filename.replace('.mp4', '.gps.csv')
                     list_of_namedtuple_to_csv(records, os.path.join(
                         foldername, outputfilename))
+        else:
+            logging.error('The file or folder {filename} does not '
+                          'exist'.format(filename=filename)
+                          )
 
 
 if __name__ == "__main__":
