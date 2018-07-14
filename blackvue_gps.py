@@ -65,8 +65,10 @@ def list_of_namedtuple_to_csv(list_of_tuples, outputfilename):
 
 
 def main(**kwargs):
-    tocsv = kwargs['--to-csv']
-    filename = kwargs['<filename>']
+    if len(kwargs) == 0:
+        kwargs = docopt(__doc__)
+    tocsv = kwargs.get('--to-csv')
+    filename = kwargs.get('<filename>')
     if filename:
         if os.path.isfile(filename):
             records = parse_blackvue_nmea(filename=filename)

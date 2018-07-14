@@ -10,7 +10,7 @@ with open('requirements.in', 'r') as requirements:
 
 setup(
     name='blackvue_gps',
-    version='2018.7.14',
+    version='2018.7.15',
     url='https://github.com/bartbroere/blackvue-gps/',
     author='Bart Broere',
     author_email='maiil@bartbroere.eu',
@@ -18,9 +18,11 @@ setup(
     description="Parse GPS records created by BlackVue Dashcams.",
     keywords='blackvue gps dashcam nmea parse parser',
     long_description=readme,
-    py_modules=['blackvue_gps'],
+    py_modules=['blackvue_gps', 'blackclue'],
     install_requires=dependencies,
-
+    entry_points = {
+        'console_scripts': ['blackvue_gps=blackvue_gps:main'],
+    },
     classifiers=(
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3 :: Only',
