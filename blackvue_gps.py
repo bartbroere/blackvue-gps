@@ -32,18 +32,21 @@ def parse_blackvue_nmea(filename):
     """
     filename = filename.replace(".mp4", ".nmea")
     records = []
+    previous_unix_ms = None
     with open(filename, 'r') as r:
         for line in r.readlines():
             if line.startswith('['):
-                # TODO make proper regex and less string slicing
-                unix_ms = re.findall(r'(?=\[).*(?=\])', line)[0][1:]
+                unix_ms = re.findall(r'(?!\[)[0-9]*(?=\])', line)[0]
                 try:
-                    parsed_nmea = pynmea2.parse(line[len(unix_ms) + 2:])
+                    parsed_nmea = pynmea2.parse(line.split(']')[-1])
                     if hasattr(parsed_nmea, 'latitude'):
-                        lat, lon = parsed_nmea.latitude, parsed_nmea.longitude
-                        records.append(GPSPoint(unix_ms=unix_ms,
-                                                lat=lat,
-                                                lon=lon))
+                        if unix_ms != previous_unix_ms:
+                            lat = parsed_nmea.latitude
+                            lon = parsed_nmea.longitude
+                            records.append(GPSPoint(unix_ms=unix_ms,
+                                                    lat=lat,
+                                                    lon=lon))
+                            previous_unix_ms = unix_ms
                 except ParseError:
                     warnings.warn('pynmea2 could not parse a line')
     return records
