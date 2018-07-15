@@ -10,7 +10,7 @@ with open('requirements.in', 'r') as requirements:
 
 setup(
     name='blackvue_gps',
-    version='2018.7.15',
+    version='2018.7.16',
     url='https://github.com/bartbroere/blackvue-gps/',
     author='Bart Broere',
     author_email='maiil@bartbroere.eu',
