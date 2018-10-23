@@ -13,7 +13,7 @@ setup(
     version='2018.7.16',
     url='https://github.com/bartbroere/blackvue-gps/',
     author='Bart Broere',
-    author_email='maiil@bartbroere.eu',
+    author_email='mail@bartbroere.eu',
     license='MIT License',
     description="Parse GPS records created by BlackVue Dashcams.",
     keywords='blackvue gps dashcam nmea parse parser',
