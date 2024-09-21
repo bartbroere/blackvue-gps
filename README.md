@@ -1,4 +1,3 @@
-![BCH compliance](https://bettercodehub.com/edge/badge/bartbroere/blackvue-gps?branch=master)
 ![Release](https://img.shields.io/pypi/v/blackvue-gps.svg)
 ![Pre-release](https://img.shields.io/github/release/bartbroere/blackvue-gps/all.svg)
 ![Licence](https://img.shields.io/pypi/l/blackvue-gps.svg)
